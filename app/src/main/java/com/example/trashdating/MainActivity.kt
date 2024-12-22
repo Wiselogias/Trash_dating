@@ -49,3 +49,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    TrashDatingTheme {
+        Greeting("Android")
+    }
+}
