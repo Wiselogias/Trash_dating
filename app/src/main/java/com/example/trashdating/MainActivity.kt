@@ -1,32 +1,49 @@
+package com.example.trashdating
+
+import BottomBar
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.trashdating.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.trashdating.ui.navigation_bar.NavHostContainer
+import com.example.trashdating.ui.theme.TrashDatingTheme
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navController = findNavController(R.id.nav_host_fragment)
+            TrashDatingTheme {
+                val navController: NavHostController = rememberNavController()
 
-        bottomNavigationView.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.homeFragment, R.id.matchesFragment, R.id.profileFragment, R.id.exploreFragment -> {
-                    bottomNavigationView.visibility = View.VISIBLE
-                }
-
-                else -> {
-                    bottomNavigationView.visibility = View.GONE
+                Scaffold(
+                    bottomBar = {
+                        BottomBar(
+                            navController = navController,
+                            modifier = Modifier
+                        )
+                    }
+                ) { paddingValues ->
+                    Box(
+                        modifier = Modifier
+                    ) {
+                        NavHostContainer(
+                            navController = navController,
+                            padding = paddingValues
+                        )
+                    }
                 }
             }
         }
