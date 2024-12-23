@@ -34,14 +34,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.trashdating.R
 import com.example.trashdating.ui.theme.TrashDatingTheme
 
@@ -108,158 +100,10 @@ private fun Stories(
 }
 
 @Composable
-private fun FollowedPeopleList(onFollowedPeopleClick: (Profile) -> Unit, followed: List<Profile>) {
-    LazyRow(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        state = rememberLazyListState()
+    Box(
     ) {
-        items(items = followed) { person ->
-            FollowedPeopleListItem(person, onFollowedPeopleClick)
-        }
-    }
-}
-
-@Composable
-private fun FollowedPeopleListItem(person: Profile, onFollowedPeopleClick: (Profile) -> Unit) {
-    Card(
-        modifier = Modifier
-            .size(56.dp)
-            .clickable { onFollowedPeopleClick(person) },
-        shape = CircleShape
-    ) {
-        Image(
-            painterResource(R.drawable.ic_following_example),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-                .border(2.dp, Color(0xFFED760E), CircleShape)
+        Text(
         )
-    }
-}
-
-@Composable
-private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
-    var isFindFriend by remember { mutableStateOf(true) }
-    Surface(
-        color = Color(0xFFED760E),
-        shape = MaterialTheme.shapes.large
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.padding(horizontal = 5.dp)
-        ) {
-            Button(
-                onClick = {
-                    onRelationshipTypeChanged()
-                    isFindFriend = !isFindFriend
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isFindFriend) Color.White else Color(0xFFED760E),
-                    contentColor = Color.Black
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.friend_search),
-                    color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-            Button(
-                onClick = {
-                    onRelationshipTypeChanged()
-                    isFindFriend = !isFindFriend
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (!isFindFriend) Color.White else Color(0xFFED760E),
-                    contentColor = Color.Black
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.relation_seek),
-                    color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProfilesList(profiles: List<Profile>) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        items(items = profiles) { profile ->
-            ProfileListItem(profile)
-        }
-    }
-}
-
-@Composable
-private fun ProfileListItem(profile: Profile) {
-    Surface(
-        color = MaterialTheme.colorScheme.primary,
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
-            .size(250.dp)
-            .clickable {}
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_profile_back_example),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .align(Alignment.Center)
-            )
-
-            Text(
-                text = "hobby",
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 16.dp, start = 16.dp)
-            )
-
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "quote",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Text(
-                    text = profile.name,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.TopEnd)
-                    .padding(top = 16.dp, end = 16.dp)
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                }
-            }
-        }
     }
 }
 
