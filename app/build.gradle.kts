@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.android
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.trashdating"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.trashdating"
@@ -40,7 +42,12 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.compose.navigation)
+    implementation(libs.fragment)
+    implementation(libs.androidx.material3)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -49,9 +56,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
