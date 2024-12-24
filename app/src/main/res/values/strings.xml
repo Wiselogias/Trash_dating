@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Trash dating</string>
+    <string name="matches_screen_header">Совпадения</string>
+    <string name="matches_screen_likes">Лайки: %1$s</string>
+    <string name="matches_screen_messages">Сообщения: %1$s</string>
+    <string name="matches_srceen_total_matches">Ваши совпадения: %1$s</string>
+    <string name="home_screen_find_relations">Ищу отношения</string>
+    <string name="home_screen_find_friend">Ищу друга</string>
 </resources>

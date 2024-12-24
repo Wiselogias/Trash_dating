@@ -37,6 +37,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.trashdating.R
+import com.example.trashdating.ui.theme.Orange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +53,7 @@ import com.example.trashdating.ui.theme.TrashDatingTheme
 fun HomeScreen(
     onFollowedPeopleClick: (Profile) -> Unit,
     onCreateStoryClick: () -> Unit,
-    onRelationshipTypeChanged: (String) -> Unit,
+    onRelationshipTypeChanged: () -> Unit,
     followed: List<Profile>,
     profiles: List<Profile>
 ) {
@@ -74,7 +79,18 @@ private fun Header() {
             .padding(top = 32.dp, start = 16.dp, end = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = "ИСКРА", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Row {
+            Image(
+                painter = painterResource(R.drawable.logo),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
+            Image(
+                painter = painterResource(R.drawable.app_name),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
+        }
         Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notifications")
     }
 }
@@ -119,7 +135,9 @@ private fun FollowedPeopleList(onFollowedPeopleClick: (Profile) -> Unit, followe
 @Composable
 private fun FollowedPeopleListItem(person: Profile, onFollowedPeopleClick: (Profile) -> Unit) {
     Card(
-        modifier = Modifier.size(56.dp).clickable { onFollowedPeopleClick(person) },
+        modifier = Modifier
+            .size(56.dp)
+            .clickable { onFollowedPeopleClick(person) },
         shape = CircleShape
     ) {
         Image(
@@ -134,10 +152,10 @@ private fun FollowedPeopleListItem(person: Profile, onFollowedPeopleClick: (Prof
 }
 
 @Composable
-private fun RelationshipTypeSwitch(onRelationshipTypeChanged: (String) -> Unit) {
+private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
     var isFindFriend by remember { mutableStateOf(true) }
     Surface(
-        color = Color(0xFFED760E),
+        color = Orange,
         shape = MaterialTheme.shapes.large
     ) {
         Row(
@@ -146,32 +164,32 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: (String) -> Unit) 
         ) {
             Button(
                 onClick = {
-                    onRelationshipTypeChanged("Ищу друга")
+                    onRelationshipTypeChanged()
                     isFindFriend = !isFindFriend
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (isFindFriend) Color.White else Color(0xFFED760E),
+                    containerColor = if (isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
                 )
             ) {
                 Text(
-                    text = "Ищу друга",
+                    text = stringResource(id = R.string.home_screen_find_friend),
                     color = Color.Black,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
             Button(
                 onClick = {
-                    onRelationshipTypeChanged("Ищу отношения")
+                    onRelationshipTypeChanged()
                     isFindFriend = !isFindFriend
                 },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (!isFindFriend) Color.White else Color(0xFFED760E),
+                    containerColor = if (!isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
                 )
             ) {
                 Text(
-                    text = "Ищу отношения",
+                    text = stringResource(R.string.home_screen_find_relations),
                     color = Color.Black,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -183,7 +201,9 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: (String) -> Unit) 
 @Composable
 private fun ProfilesList(profiles: List<Profile>) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().padding(20.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -209,7 +229,9 @@ private fun ProfileListItem(profile: Profile) {
             Image(
                 painter = painterResource(id = R.drawable.ic_profile_back_example),
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize().align(Alignment.Center)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.Center)
             )
 
             Text(
@@ -221,7 +243,9 @@ private fun ProfileListItem(profile: Profile) {
             )
 
             Column(
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -237,34 +261,29 @@ private fun ProfileListItem(profile: Profile) {
 
             Box(
                 modifier = Modifier
-                    .size(48.dp)
                     .align(Alignment.TopEnd)
-                    .padding(top = 16.dp, end = 16.dp)
+                    .padding(top = 8.dp, end = 8.dp)
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
+                Column (
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    // Кнопка "Лайк"
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.ic_explore),
-//                        contentDescription = "Like",
-//                        modifier = Modifier.size(24.dp)
-//                    )
-//
-//                    // Кнопка "Сообщение"
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.ic_explore),
-//                        contentDescription = "Message",
-//                        modifier = Modifier.size(24.dp)
-//                    )
-//
-//                    // Кнопка "Опции"
-//                    Icon(
-//                        painter = painterResource(id = R.drawable.ic_explore),
-//                        contentDescription = "Options",
-//                        modifier = Modifier.size(24.dp)
-//                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.like),
+                        contentDescription = "Like",
+                        modifier = Modifier.padding(bottom = 8.dp).size(12.dp)
+                    )
+                   Icon(
+                        painter = painterResource(id = R.drawable.write),
+                        contentDescription = "Message",
+                        modifier = Modifier.padding(bottom = 8.dp).size(12.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.more),
+                        contentDescription = "Options",
+                        modifier = Modifier.size(12.dp)
+                    )
+
                 }
             }
         }

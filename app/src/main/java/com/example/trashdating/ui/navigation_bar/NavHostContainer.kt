@@ -44,7 +44,14 @@ fun NavHostContainer(
             }
 
             composable("matches") {
-                MatchesScreen()
+                MatchesScreen(
+                    onLikedPeopleClick = {},
+                    onChattedPeopleClick = {},
+                    onPersonProfileClick = {},
+                    profiles = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
+                    1,
+                    2
+                )
             }
 
             composable("profile") {
