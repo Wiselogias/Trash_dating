@@ -42,6 +42,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.trashdating.R
 import com.example.trashdating.ui.theme.Orange
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.trashdating.R
 import com.example.trashdating.ui.theme.TrashDatingTheme
 
 @Composable
@@ -278,6 +283,7 @@ private fun ProfileListItem(profile: Profile) {
                         contentDescription = "Options",
                         modifier = Modifier.size(12.dp)
                     )
+
                 }
             }
         }
