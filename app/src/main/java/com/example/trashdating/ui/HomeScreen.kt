@@ -74,79 +74,14 @@ private fun Header() {
             .padding(top = 32.dp, start = 16.dp, end = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = stringResource(R.string.iskra), fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Icon(
-            imageVector = Icons.Default.Notifications,
-            contentDescription = "Notifications"
-        )
-    }
-}
-
-@Composable
-private fun Stories(
-    onCreateStoryClick: () -> Unit,
-    onFollowedPeopleClick: (Profile) -> Unit,
-    followed: List<Profile>
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        FloatingActionButton(
-            shape = ShapeDefaults.ExtraLarge,
-            onClick = onCreateStoryClick,
-            modifier = Modifier.padding(10.dp)
-        ) {
-            Text(text = stringResource(R.string.plus))
-        }
-        FollowedPeopleList(onFollowedPeopleClick, followed)
-    }
-}
-import com.example.trashdating.ui.theme.TrashDatingTheme
-
-@Composable
-fun HomeScreen(
-    onFollowedPeopleClick: (Profile) -> Unit,
-    onCreateStoryClick: () -> Unit,
-    onRelationshipTypeChanged: () -> Unit,
-    followed: List<Profile>,
-    profiles: List<Profile>
-) {
-    TrashDatingTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Header()
-            Stories(onCreateStoryClick, onFollowedPeopleClick, followed)
-            RelationshipTypeSwitch(onRelationshipTypeChanged)
-            ProfilesList(profiles)
-        }
-    }
-}
-
-@Composable
-private fun Header() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
         Row {
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = null,
                 modifier = Modifier.size(25.dp)
             )
-            Image(
-                painter = painterResource(R.drawable.app_name),
-                contentDescription = null,
-                modifier = Modifier.size(25.dp)
+            Text(
+                text = stringResource(R.string.iskra)
             )
         }
         Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notifications")
@@ -329,12 +264,16 @@ private fun ProfileListItem(profile: Profile) {
                     Icon(
                         painter = painterResource(id = R.drawable.like),
                         contentDescription = "Like",
-                        modifier = Modifier.padding(bottom = 8.dp).size(12.dp)
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                            .size(12.dp)
                     )
                    Icon(
                         painter = painterResource(id = R.drawable.write),
                         contentDescription = "Message",
-                        modifier = Modifier.padding(bottom = 8.dp).size(12.dp)
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                            .size(12.dp)
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.more),
