@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Trash dating</string>
+    <string name="relation_seek">Ищу отношения</string>
+    <string name="iskra">ИСКРА</string>
+    <string name="plus">+</string>
+    <string name="friend_search">Ищу друга</string>
 </resources>
