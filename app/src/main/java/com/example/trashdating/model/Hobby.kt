@@ -1,9 +1,14 @@
 package com.example.trashdating.model
 
-enum class Hobby(private val value: String) {
-    Travelling("travelling"),
-    Reading("reading"),
-    Cooking("cooking");
+import com.example.trashdating.R
+
+enum class Hobby(
+    private val value: String,
+    val sticker: Int
+) {
+    Travelling("travelling", R.drawable.palm_tree),
+    Reading("reading", R.drawable.books),
+    Cooking("cooking", R.drawable.cooking);
 
     companion object {
         fun fromValue(x: String): Hobby {

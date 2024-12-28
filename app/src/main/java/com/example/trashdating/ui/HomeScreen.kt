@@ -18,15 +18,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,6 +49,7 @@ import com.example.trashdating.repository.impl.QuotesRepositoryMock
 import com.example.trashdating.repository.impl.UsersRepositoryMock
 import com.example.trashdating.ui.theme.Orange
 import com.example.trashdating.ui.theme.TrashDatingTheme
+import com.example.trashdating.ui.theme.White
 import com.example.trashdating.viewmodel.ProfilesViewModel
 
 @Composable
@@ -88,15 +85,21 @@ private fun Header() {
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = null,
-                modifier = Modifier.size(25.dp)
+                modifier = Modifier
+                    .size(35.dp)
+                    .padding(end = 4.dp)
             )
             Image(
                 painter = painterResource(R.drawable.app_name),
                 contentDescription = null,
-                modifier = Modifier.size(25.dp)
+                modifier = Modifier.height(35.dp)
             )
         }
-        Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notifications")
+        Image(
+            painter = painterResource(R.drawable.notification_bell),
+            contentDescription = "Notifications",
+            modifier = Modifier.size(35.dp),
+        )
     }
 }
 
@@ -112,12 +115,21 @@ private fun Stories(
             .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        FloatingActionButton(
+        Button(
             onClick = onCreateStoryClick,
-            shape = ShapeDefaults.ExtraLarge,
-            modifier = Modifier.padding(horizontal = 10.dp)
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = White),
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .size(56.dp)
+                .border(2.dp, Orange, CircleShape)
         ) {
-            Text(text = "+")
+            Text(
+                text = "+",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                color = Orange
+            )
         }
         FollowedPeopleList(onFollowedPeopleClick, followed)
     }
@@ -149,7 +161,7 @@ private fun FollowedPeopleListItem(person: Profile, onFollowedPeopleClick: (Prof
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .border(2.dp, Color(0xFFED760E), CircleShape)
+                .border(2.dp, Orange, CircleShape)
                 .clickable { onFollowedPeopleClick(person) }
         )
     }
@@ -174,12 +186,14 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
-                )
+                ),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(
                     text = stringResource(id = R.string.home_screen_find_friend),
                     color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp
                 )
             }
             Button(
@@ -190,12 +204,14 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (!isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
-                )
+                ),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(
                     text = stringResource(R.string.home_screen_find_relations),
                     color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp
                 )
             }
         }
@@ -238,15 +254,25 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                 contentScale = ContentScale.Crop
             )
 
-            Text(
-                text = profile.hobby.name,
-                style = MaterialTheme.typography.labelLarge,
+            Row(
                 modifier = Modifier
+                    .padding(top = 16.dp, start = 16.dp)
                     .align(Alignment.TopStart)
-                    .padding(top = 16.dp, start = 16.dp),
-                fontSize = 20.sp,
-                fontStyle = FontStyle.Italic
-            )
+            ) {
+                Image(
+                    painter = painterResource(profile.hobby.sticker),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(end = 4.dp)
+                )
+                Text(
+                    text = profile.hobby.name,
+                    style = MaterialTheme.typography.labelLarge,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic
+                )
+            }
 
             Column(
                 modifier = Modifier
@@ -274,33 +300,34 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                 )
             }
 
-            Box(
+            Column(
                 modifier = Modifier
-                    .width(30.dp)
+                    .width(45.dp)
                     .align(Alignment.TopEnd)
                     .padding(top = 8.dp, end = 8.dp)
             ) {
-                Column (
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.like),
-                        contentDescription = "Like",
-                        modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth()
-                    )
-                   Icon(
-                        painter = painterResource(id = R.drawable.write),
-                        contentDescription = "Message",
-                        modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth()
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.more),
-                        contentDescription = "Options",
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.like),
+                    contentDescription = "Like",
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
+               Icon(
+                    painter = painterResource(id = R.drawable.write),
+                    contentDescription = "Message",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.more),
+                    contentDescription = "Options",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
             }
         }
     }
