@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trashdating.R
+import com.example.trashdating.model.Profile
 import com.example.trashdating.ui.theme.Orange
 import com.example.trashdating.ui.theme.TrashDatingTheme
 
@@ -188,7 +189,7 @@ fun MatchesPreview() {
         onLikedPeopleClick = {},
         onChattedPeopleClick = {},
         onPersonProfileClick = {},
-        profiles = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
+        profiles = listOf(Profile("Clare", "clare@gmail.com", "Pup", "reading", "")),
         1,
         2
     )
