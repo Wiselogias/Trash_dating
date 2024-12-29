@@ -14,7 +14,8 @@ class UsersRepositoryMock : UsersRepository {
                 email = "anna@example.com",
                 avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlwGc-VfxV9QMIkmFwxw7dD0rW74M9W7hHBw&s",
                 hobby = Hobby.Travelling,
-                profileImage = "https://img2.akspic.ru/previews/0/5/8/4/7/174850/174850-zakat_oblaka_estetika-oblako-zakat-estetika-atmosfera-500x.jpg"
+                profileImage = "https://img2.akspic.ru/previews/0/5/8/4/7/174850/174850-zakat_oblaka_estetika-oblako-zakat-estetika-atmosfera-500x.jpg",
+                95
             )
         ),
         Pair(
@@ -25,7 +26,8 @@ class UsersRepositoryMock : UsersRepository {
                 email = "mike@example.com",
                 avatar = "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_800,h_600/https://www.kirilltigai.com/wp-content/uploads/Muzhskaya-fotosessiya-v-studii-v-Kieve-fotograf-Kirill-Tigaj-_02-800x600.jpg",
                 hobby = Hobby.Reading,
-                profileImage = "https://i.pinimg.com/originals/57/03/ff/5703ff332958d819cd439928339549ee.jpg"
+                profileImage = "https://i.pinimg.com/originals/57/03/ff/5703ff332958d819cd439928339549ee.jpg",
+                90
             )
         ),
         Pair(
@@ -36,7 +38,8 @@ class UsersRepositoryMock : UsersRepository {
                 email = "bob@example.com",
                 avatar = "https://www.deafkontakt.ru/photos/3506663.jpg",
                 hobby = Hobby.Cooking,
-                profileImage = "https://i.pinimg.com/236x/1a/af/61/1aaf61b74ccc30ea596abf7a1db81639.jpg"
+                profileImage = "https://i.pinimg.com/236x/1a/af/61/1aaf61b74ccc30ea596abf7a1db81639.jpg",
+                100
             )
         )
     )
@@ -46,6 +49,10 @@ class UsersRepositoryMock : UsersRepository {
     }
 
     override fun getFollowedUsers(user: Profile): List<Profile> {
+        return users.values.toList()
+    }
+
+    override fun getMatches(user: Profile): List<Profile> {
         return users.values.toList()
     }
 
