@@ -48,7 +48,12 @@ fun NavHostContainer(
             }
 
             composable("profile") {
-                ProfileScreen()
+                ProfileScreen(
+                    name = "Alfredo Calzoni",
+                    city = "Hamburg, Germany",
+                    age = 20,
+                    distance = 2.5f
+                )
             }
         })
 
