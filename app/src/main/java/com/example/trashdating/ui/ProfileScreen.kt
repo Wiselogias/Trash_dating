@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
@@ -35,6 +34,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
+import coil.compose.AsyncImage
 import com.example.trashdating.R
 
 
@@ -46,7 +46,8 @@ fun ProfileScreen(
     city: String,
     age: Int,
     distance: Float,
-    matchprocent: Int
+    matchprocent: Int,
+    //tags: List<String>
 ) {
     val tagsEats = remember { listOf("Пицца", "Суши", "Бургеры", "Кофе") }
     val tagSocials = remember { listOf("Кинотеатры", "Концерты и шоу", "Музеи и галлереи", "Театры", "Шоппинг") }
@@ -62,21 +63,6 @@ fun ProfileScreen(
     ) {
         ProfileBackgroundInformation(name, age, city, matchprocent)
         Header(distance)
-
-        ProfileBotomBar(
-            heartColor = heartColorButton,
-            onHeartClick = {
-                heartColorButton = if (heartColorButton == Color(0xFFABB0BA))
-                    Color(0xFFF55231)
-                else
-                    Color(0xFFABB0BA)
-            },
-            onStarClick = {},
-            onCrossClick = {},
-            mod = Modifier
-                .align(Alignment.Center)
-                .padding(bottom = 16.dp)
-        )
         DraggableSheet(
             tagsEats = tagsEats,
             tagsSocials = tagSocials,
@@ -87,6 +73,21 @@ fun ProfileScreen(
                 sheetOffset = (sheetOffset + dragAmount.dp).coerceIn(0.dp, 500.dp)
             }
         )
+        ProfileBotomBar(
+            heartColor = heartColorButton,
+            onHeartClick = {
+                heartColorButton = if (heartColorButton == Color(0xFFABB0BA))
+                    Color(0xFFF55231)
+                else
+                    Color(0xFFABB0BA)
+            },
+            onStarClick = {},
+            onCrossClick = {},
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp)
+        )
+
     }
     LaunchedEffect(sheetOffset) {
 
@@ -151,11 +152,11 @@ fun ProfileBackgroundInformation(
         modifier = Modifier.fillMaxSize()
     ) {
 
-        Image(
-            painter = painterResource(id = R.drawable.adrian),
-            contentDescription = "Background Image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+        AsyncImage(
+            model = "",
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
 
@@ -292,17 +293,18 @@ fun DraggableSheet(
     }
 }
 
+
 @Composable
 fun ProfileBotomBar(
     heartColor: Color,
     onHeartClick: (Color) -> Unit,
     onStarClick: () -> Unit,
     onCrossClick: () -> Unit,
-    mod: Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = mod
-            .fillMaxSize()
+        modifier = modifier
+
     ) {
         Box(
             modifier = Modifier
