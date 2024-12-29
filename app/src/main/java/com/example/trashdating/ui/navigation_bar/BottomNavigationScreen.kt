@@ -29,12 +29,13 @@ fun BottomBar(
     modifier: Modifier = Modifier,
     photoRepository: PhotoRepository
 ) {
+
     val screens = NavigationConstants.BottomNavItems
 
     NavigationBar(
         modifier = modifier.height(60.dp),
         containerColor = MaterialTheme.colorScheme.surface,
-        tonalElevation = 1.dp
+//        tonalElevation = 1.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -64,7 +65,7 @@ fun BottomBar(
                             selectedIconColor = MaterialTheme.colorScheme.surface,
                             unselectedIconColor = Color(0xFFFF9401),
                             indicatorColor = Color(0xFFFF9401),
-                        )
+                        ),
                     )
                 }
 

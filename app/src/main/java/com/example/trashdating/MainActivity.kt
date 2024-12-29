@@ -1,6 +1,6 @@
 package com.example.trashdating
 
-import BottomBar
+import BottomBarWithDivider
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 val photoRepository = PhotoRepository()
                 Scaffold(
                     bottomBar = {
-                        BottomBar(
+                        BottomBarWithDivider(
                             navController = navController,
                             modifier = Modifier,
                             photoRepository
