@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import coil.compose.rememberAsyncImagePainter
+import com.example.trashdating.repo.PhotoRepository
 import com.example.trashdating.ui.navigation_bar.IconNavItem
 import com.example.trashdating.ui.navigation_bar.ImageNavItem
 import com.example.trashdating.ui.navigation_bar.NavigationConstants
@@ -26,12 +26,13 @@ import com.example.trashdating.ui.navigation_bar.NavigationConstants
 @Composable
 fun BottomBar(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    photoRepository: PhotoRepository
 ) {
     val screens = NavigationConstants.BottomNavItems
 
     NavigationBar(
-        modifier = modifier.height(80.dp),
+        modifier = modifier.height(60.dp),
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 1.dp
     ) {
@@ -48,7 +49,7 @@ fun BottomBar(
                                 contentDescription = ""
                             )
                         },
-                        modifier = Modifier.size(46.dp),
+                        modifier = Modifier.size(36.dp),
                         selected = currentRoute == screen.route,
                         onClick = {
                             navController.navigate(screen.route) {
@@ -71,11 +72,11 @@ fun BottomBar(
                     NavigationBarItem(
                         icon = {
                             Image(
-                                painter = rememberAsyncImagePainter(model = screen.imageUrl),
+                                painter = photoRepository.getPhoto(screen.imageUrl),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .size(66.dp)
+                                    .size(46.dp)
                                     .clip(CircleShape)
                             )
                         },
@@ -94,6 +95,7 @@ fun BottomBar(
                             unselectedIconColor = Color(0xFFFF9401),
                             indicatorColor = Color(0xFFFF9401),
                         )
+
                     )
                 }
             }
