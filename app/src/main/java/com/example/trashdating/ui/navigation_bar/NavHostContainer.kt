@@ -7,6 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.trashdating.model.Profile
+import com.example.trashdating.model.ProfileCard
+import com.example.trashdating.model.Tags
+import com.example.trashdating.repository.impl.QuotesRepositoryMock
+import com.example.trashdating.repository.impl.UsersRepositoryMock
 import com.example.trashdating.ui.ChatScreen
 import com.example.trashdating.ui.ExploreScreen
 import com.example.trashdating.ui.HomeScreen
@@ -78,8 +83,6 @@ fun NavHostContainer(
                             arts = listOf("Фотография", "Видеосъемка", "Дизайн", "Танцы"),
                             life = listOf("Бег", "Фитнес", "Велосипед", "Лыжи", "Йога", "Сноуборд")
                 )
-
-
                     )
                 )
             }
