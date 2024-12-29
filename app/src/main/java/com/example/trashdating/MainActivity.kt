@@ -1,6 +1,6 @@
 package com.example.trashdating
 
-import BottomBar
+import BottomBarWithDivider
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.trashdating.repo.PhotoRepository
 import com.example.trashdating.ui.navigation_bar.NavHostContainer
 import com.example.trashdating.ui.theme.TrashDatingTheme
 
@@ -20,12 +21,13 @@ class MainActivity : ComponentActivity() {
 
             TrashDatingTheme {
                 val navController: NavHostController = rememberNavController()
-
+                val photoRepository = PhotoRepository()
                 Scaffold(
                     bottomBar = {
-                        BottomBar(
+                        BottomBarWithDivider(
                             navController = navController,
-                            modifier = Modifier
+                            modifier = Modifier,
+                            photoRepository
                         )
                     }
                 ) { paddingValues ->

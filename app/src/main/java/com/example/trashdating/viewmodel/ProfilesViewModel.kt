@@ -10,13 +10,12 @@ class ProfilesViewModel(
     private val usersRepository: UsersRepository,
     quotesRepository: QuotesRepository
 ): ViewModel() {
-    private var _followed: List<Profile>
+    private var _followed: List<Profile> = usersRepository.getFollowedUsers(me)
     private var _profiles: List<Profile>
     private var _quotes: List<String>
     private var _matches: List<Profile>
 
     init {
-        _followed = usersRepository.getFollowedUsers(me)
         _profiles = usersRepository.getAllUsers()
         _quotes = _profiles.map { p -> quotesRepository.getQuote(p.id) }
         _matches = usersRepository.getMatches(me)
