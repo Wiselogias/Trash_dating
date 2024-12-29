@@ -9,22 +9,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,19 +36,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.trashdating.R
+import com.example.trashdating.model.Profile
+import com.example.trashdating.repository.impl.QuotesRepositoryMock
+import com.example.trashdating.repository.impl.UsersRepositoryMock
 import com.example.trashdating.ui.theme.Orange
 import com.example.trashdating.ui.theme.TrashDatingTheme
+import com.example.trashdating.ui.theme.White
+import com.example.trashdating.viewmodel.ProfilesViewModel
 
 @Composable
 fun HomeScreen(
     onFollowedPeopleClick: (Profile) -> Unit,
     onCreateStoryClick: () -> Unit,
     onRelationshipTypeChanged: () -> Unit,
-    followed: List<Profile>,
-    profiles: List<Profile>
+    viewModel: ProfilesViewModel,
 ) {
     TrashDatingTheme {
         Column(
@@ -59,9 +66,9 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Header()
-            Stories(onCreateStoryClick, onFollowedPeopleClick, followed)
+            Stories(onCreateStoryClick, onFollowedPeopleClick, viewModel.followed)
             RelationshipTypeSwitch(onRelationshipTypeChanged)
-            ProfilesList(profiles)
+            ProfilesList(viewModel)
         }
     }
 }
@@ -71,20 +78,28 @@ private fun Header() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 32.dp, start = 8.dp, end = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Row {
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = null,
-                modifier = Modifier.size(25.dp)
+                modifier = Modifier
+                    .size(35.dp)
+                    .padding(end = 4.dp)
             )
-            Text(
-                text = stringResource(R.string.iskra)
+            Image(
+                painter = painterResource(R.drawable.app_name),
+                contentDescription = null,
+                modifier = Modifier.height(35.dp)
             )
         }
-        Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notifications")
+        Image(
+            painter = painterResource(R.drawable.notification_bell),
+            contentDescription = "Notifications",
+            modifier = Modifier.size(35.dp),
+        )
     }
 }
 
@@ -97,16 +112,24 @@ private fun Stories(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        FloatingActionButton(
+        Button(
             onClick = onCreateStoryClick,
-            shape = ShapeDefaults.ExtraLarge,
-            modifier = Modifier.padding(10.dp)
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = White),
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .size(56.dp)
+                .border(2.dp, Orange, CircleShape)
         ) {
-            Text(text = "+")
+            Text(
+                text = "+",
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center,
+                color = Orange
+            )
         }
         FollowedPeopleList(onFollowedPeopleClick, followed)
     }
@@ -117,6 +140,7 @@ private fun FollowedPeopleList(onFollowedPeopleClick: (Profile) -> Unit, followe
     LazyRow(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         state = rememberLazyListState()
     ) {
         items(items = followed) { person ->
@@ -128,18 +152,17 @@ private fun FollowedPeopleList(onFollowedPeopleClick: (Profile) -> Unit, followe
 @Composable
 private fun FollowedPeopleListItem(person: Profile, onFollowedPeopleClick: (Profile) -> Unit) {
     Card(
-        modifier = Modifier
-            .size(56.dp)
-            .clickable { onFollowedPeopleClick(person) },
+        modifier = Modifier.size(56.dp),
         shape = CircleShape
     ) {
-        Image(
-            painterResource(R.drawable.ic_following_example),
-            contentDescription = "",
+        AsyncImage(
+            model = person.avatar,
+            contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
-                .border(2.dp, Color(0xFFED760E), CircleShape)
+                .border(2.dp, Orange, CircleShape)
+                .clickable { onFollowedPeopleClick(person) }
         )
     }
 }
@@ -163,12 +186,14 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
-                )
+                ),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(
                     text = stringResource(id = R.string.home_screen_find_friend),
                     color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp
                 )
             }
             Button(
@@ -179,12 +204,14 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (!isFindFriend) Color.White else Orange,
                     contentColor = Color.Black
-                )
+                ),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(
                     text = stringResource(R.string.home_screen_find_relations),
                     color = Color.Black,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontSize = 16.sp
                 )
             }
         }
@@ -192,95 +219,115 @@ private fun RelationshipTypeSwitch(onRelationshipTypeChanged: () -> Unit) {
 }
 
 @Composable
-private fun ProfilesList(profiles: List<Profile>) {
+private fun ProfilesList(viewModel: ProfilesViewModel) {
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(items = profiles) { profile ->
-            ProfileListItem(profile)
+        items(items = viewModel.profiles) { profile ->
+            ProfileListItem(profile, viewModel)
         }
     }
 }
 
 @Composable
-private fun ProfileListItem(profile: Profile) {
+private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
     Surface(
         color = MaterialTheme.colorScheme.primary,
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
-            .size(250.dp)
+            .fillMaxWidth()
+            .height(300.dp)
             .clickable {}
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_profile_back_example),
+            AsyncImage(
+                model = profile.profileImage,
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .align(Alignment.Center)
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
 
-            Text(
-                text = "hobby",
-                style = MaterialTheme.typography.labelSmall,
+            Row(
                 modifier = Modifier
-                    .align(Alignment.TopStart)
                     .padding(top = 16.dp, start = 16.dp)
-            )
-
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                    .align(Alignment.TopStart)
             ) {
-                Text(
-                    text = "quote",
-                    style = MaterialTheme.typography.bodySmall
+                Image(
+                    painter = painterResource(profile.hobby.sticker),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(end = 4.dp)
                 )
                 Text(
-                    text = profile.name,
-                    style = MaterialTheme.typography.bodySmall
+                    text = profile.hobby.name,
+                    style = MaterialTheme.typography.labelLarge,
+                    fontSize = 20.sp,
+                    fontStyle = FontStyle.Italic
                 )
             }
 
-            Box(
+            Column(
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = viewModel.getQuote(profile.id),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    text = profile.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .width(45.dp)
                     .align(Alignment.TopEnd)
                     .padding(top = 8.dp, end = 8.dp)
             ) {
-                Column (
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.like),
-                        contentDescription = "Like",
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
-                            .size(12.dp)
-                    )
-                   Icon(
-                        painter = painterResource(id = R.drawable.write),
-                        contentDescription = "Message",
-                        modifier = Modifier
-                            .padding(bottom = 8.dp)
-                            .size(12.dp)
-                    )
-                    Icon(
-                        painter = painterResource(id = R.drawable.more),
-                        contentDescription = "Options",
-                        modifier = Modifier.size(12.dp)
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = R.drawable.like),
+                    contentDescription = "Like",
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
+               Icon(
+                    painter = painterResource(id = R.drawable.write),
+                    contentDescription = "Message",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.more),
+                    contentDescription = "Options",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp)
+                )
             }
         }
     }
@@ -293,9 +340,16 @@ fun DefaultPreview() {
         onFollowedPeopleClick = {},
         onCreateStoryClick = {},
         onRelationshipTypeChanged = {},
-        followed = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
-        profiles = listOf(Profile("Alice", "alice@example.com", "Profile picture"))
+        viewModel = ProfilesViewModel(
+            Profile(
+                name = "Tim",
+                email = "glhf@example.com",
+                avatar = "http://images.com/0",
+                hobby = "cooking",
+                profileImage = ""
+            ),
+            UsersRepositoryMock(),
+            QuotesRepositoryMock()
+        )
     )
 }
-
-data class Profile(val name: String, val email: String, val imageUrl: String)
