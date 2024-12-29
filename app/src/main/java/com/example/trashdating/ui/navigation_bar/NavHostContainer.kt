@@ -7,14 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.trashdating.model.ProfileCard
-import com.example.trashdating.model.Tags
 import com.example.trashdating.ui.ChatScreen
 import com.example.trashdating.ui.ExploreScreen
 import com.example.trashdating.ui.HomeScreen
 import com.example.trashdating.ui.MatchesScreen
-import com.example.trashdating.ui.Profile
 import com.example.trashdating.ui.ProfileScreen
+import com.example.trashdating.viewmodel.ProfilesViewModel
 
 @Composable
 fun NavHostContainer(
@@ -40,13 +38,29 @@ fun NavHostContainer(
                     onFollowedPeopleClick = {},
                     onCreateStoryClick = {},
                     onRelationshipTypeChanged = {},
-                    followed = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
-                    profiles = listOf(Profile("Alice", "alice@example.com", "Profile picture"))
+                    viewModel = ProfilesViewModel(
+                        Profile(
+                            name = "Tim",
+                            email = "glhf@example.com",
+                            avatar = "http://images.com/0",
+                            hobby = "cooking",
+                            profileImage = ""
+                        ),
+                        UsersRepositoryMock(),
+                        QuotesRepositoryMock()
+                    )
                 )
             }
 
             composable("matches") {
-                MatchesScreen()
+                MatchesScreen(
+                    onLikedPeopleClick = {},
+                    onChattedPeopleClick = {},
+                    onPersonProfileClick = {},
+                    profiles = listOf(Profile("Clare", "clare@gmail.com", "Pup", "cooking", "")),
+                    1,
+                    2
+                )
             }
 
             composable("profile") {
