@@ -52,7 +52,8 @@ fun NavHostContainer(
                     name = "Alfredo Calzoni",
                     city = "Hamburg, Germany",
                     age = 20,
-                    distance = 2.5f
+                    distance = 2.5f,
+                    matchprocent = 80,
                 )
             }
         })
