@@ -45,12 +45,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.trashdating.R
 import com.example.trashdating.model.Profile
-import com.example.trashdating.repository.impl.QuotesRepositoryMock
-import com.example.trashdating.repository.impl.UsersRepositoryMock
 import com.example.trashdating.ui.theme.Orange
 import com.example.trashdating.ui.theme.TrashDatingTheme
 import com.example.trashdating.ui.theme.White
 import com.example.trashdating.viewmodel.ProfilesViewModel
+import com.example.trashdating.viewmodel.ProfilesViewModelMock
 
 @Composable
 fun HomeScreen(
@@ -340,16 +339,6 @@ fun DefaultPreview() {
         onFollowedPeopleClick = {},
         onCreateStoryClick = {},
         onRelationshipTypeChanged = {},
-        viewModel = ProfilesViewModel(
-            Profile(
-                name = "Tim",
-                email = "glhf@example.com",
-                avatar = "http://images.com/0",
-                hobby = "cooking",
-                profileImage = ""
-            ),
-            UsersRepositoryMock(),
-            QuotesRepositoryMock()
-        )
+        viewModel = ProfilesViewModelMock
     )
 }
