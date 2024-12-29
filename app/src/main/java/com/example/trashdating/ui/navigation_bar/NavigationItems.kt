@@ -1,37 +1,32 @@
 package com.example.trashdating.ui.navigation_bar
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.example.trashdating.R
 
 data class BottomNavItem(
-    val icon: ImageVector,
+    val icon: Int,
     val route: String,
 )
 
 object NavigationConstants {
     val BottomNavItems = listOf(
         BottomNavItem(
-            icon = Icons.Filled.Home,
+            icon = R.drawable.ic_home_24,
             route = "home"
         ),
         BottomNavItem(
-            icon = Icons.Filled.Search,
+            icon = R.drawable.ic_search_24,
             route = "explore"
         ),
         BottomNavItem(
-            icon = Icons.Filled.Person,
+            icon = R.drawable.ic_group_24,
             route = "profile"
         ),
         BottomNavItem(
-            icon = Icons.Filled.MailOutline,
+            icon = R.drawable.ic_chat_24,
             route = "chat"
         ),
         BottomNavItem(
-            icon = Icons.Filled.Person,
+            icon = R.drawable.ic_group_24,
             route = "matches"
         )
     )

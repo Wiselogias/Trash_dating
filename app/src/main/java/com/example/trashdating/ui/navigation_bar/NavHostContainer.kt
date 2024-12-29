@@ -11,6 +11,7 @@ import com.example.trashdating.ui.ChatScreen
 import com.example.trashdating.ui.ExploreScreen
 import com.example.trashdating.ui.HomeScreen
 import com.example.trashdating.ui.MatchesScreen
+import com.example.trashdating.ui.Profile
 import com.example.trashdating.ui.ProfileScreen
 
 @Composable
@@ -33,11 +34,24 @@ fun NavHostContainer(
             }
 
             composable("home") {
-                HomeScreen()
+                HomeScreen(
+                    onFollowedPeopleClick = {},
+                    onCreateStoryClick = {},
+                    onRelationshipTypeChanged = {},
+                    followed = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
+                    profiles = listOf(Profile("Alice", "alice@example.com", "Profile picture"))
+                )
             }
 
             composable("matches") {
-                MatchesScreen()
+                MatchesScreen(
+                    onLikedPeopleClick = {},
+                    onChattedPeopleClick = {},
+                    onPersonProfileClick = {},
+                    profiles = listOf(Profile("Clare", "clare@gmail.com", "Pup")),
+                    1,
+                    2
+                )
             }
 
             composable("profile") {

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -34,7 +35,7 @@ fun BottomBar(
         screens.forEach { screen ->
             NavigationBarItem(
                 icon = {
-                    Icon(imageVector = screen.icon, contentDescription = "")
+                    Icon(painter = painterResource(screen.icon), contentDescription = "")
                 },
                 selected = currentRoute == screen.route,
                 onClick = {
