@@ -2,51 +2,47 @@ package com.example.trashdating.ui
 
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.trashdating.R
-import com.example.trashdating.model.ProfileCard
+import com.example.trashdating.viewmodel.ProfileCardViewModel
 
 
 @Composable
 fun ProfileScreen(
-    profile: ProfileCard
+    viewModel: ProfileCardViewModel
 ) {
-    val tagsEats = remember { listOf("Пицца", "Суши", "Бургеры", "Кофе") }
-    val tagSocials = remember { listOf("Кинотеатры", "Концерты и шоу", "Музеи и галлереи", "Театры", "Шоппинг") }
-    val tagArts = remember { listOf("Фотография", "Видеосъемка", "Дизайн", "Танцы") }
-    val tagLifes = remember { listOf("Бег", "Фитнес", "Велосипед", "Лыжи", "Йога", "Сноуборд") }
+    val profile = remember { viewModel.authorizedUserData }
     var sheetOffset by remember { mutableStateOf(500.dp) }
     val animatedOffset by animateDpAsState(targetValue = sheetOffset)
     var heartColorButton by remember { mutableStateOf(Color(0xFFABB0BA))}
@@ -55,13 +51,19 @@ fun ProfileScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        ProfileBackgroundInformation(profile.name, profile.age, profile.city, profile.matchprocent)
+        ProfileBackgroundInformation(
+            profile.name,
+            profile.age,
+            profile.city,
+            profile.matchprocent,
+            profile.profileImage
+        )
         Header(profile.distance)
         DraggableSheet(
-            tagsEats = tagsEats,
-            tagsSocials = tagSocials,
-            tagsArts = tagArts,
-            tagsLife = tagLifes,
+            tagsEats = profile.tags.eats,
+            tagsSocials = profile.tags.socials,
+            tagsArts = profile.tags.arts,
+            tagsLife = profile.tags.life,
             sheetOffset = animatedOffset,
             onDrag = { dragAmount ->
                 sheetOffset = (sheetOffset + dragAmount.dp).coerceIn(0.dp, 500.dp)
@@ -102,7 +104,9 @@ fun Header (distance: Float) {
             .padding(
                 start = 16.dp,
                 end = 16.dp,
-                top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+                top = WindowInsets.statusBars
+                    .asPaddingValues()
+                    .calculateTopPadding()
             )
             .height(60.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -140,14 +144,15 @@ fun ProfileBackgroundInformation(
     name: String,
     age: Int,
     city: String,
-    matchprocent: Int
+    matchprocent: Int,
+    profileImage: String
 ){
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
 
         AsyncImage(
-            model = "",
+            model = profileImage,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -217,11 +222,13 @@ fun ProfileBackgroundInformation(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ProfileTagsSection(title: String, tags: List<String>) {
-    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp)) {
         Text(
             text = title,
             fontSize = 18.sp,
-            color = Color(0xFF828282),
+            color = MaterialTheme.colorScheme.inverseSurface,
             modifier = Modifier.padding(horizontal = 4.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -234,7 +241,7 @@ fun ProfileTagsSection(title: String, tags: List<String>) {
                 Text(
                     text = tag,
                     fontSize = 18.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.inverseSurface,
                     modifier = Modifier
                         .border(1.dp, Color(0xFFFACC7A), shape = RoundedCornerShape(16.dp))
                         .padding(horizontal = 10.dp, vertical = 6.dp)
@@ -258,7 +265,7 @@ fun DraggableSheet(
             .fillMaxWidth()
             .offset { IntOffset(0, sheetOffset.roundToPx()) }
             .background(
-                color = Color.White,
+                color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp)
             )
             .pointerInput(Unit) {
@@ -269,7 +276,9 @@ fun DraggableSheet(
             .fillMaxHeight(),
         contentAlignment = Alignment.TopCenter
     ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)) {
             Box(
                 modifier = Modifier
                     .width(60.dp)
@@ -307,7 +316,7 @@ fun ProfileBotomBar(
                 .padding(bottom = 16.dp)
                 .shadow(4.dp, shape = CircleShape)
                 .clip(CircleShape)
-                .background(Color.White),
+                .background(MaterialTheme.colorScheme.surfaceContainerHigh),
             contentAlignment = Alignment.Center
         ) {
             Row(

@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.trashdating.repo.PhotoRepository
+import com.example.trashdating.repository.PhotoRepository
 
 @Composable
 fun BottomBarWithDivider(

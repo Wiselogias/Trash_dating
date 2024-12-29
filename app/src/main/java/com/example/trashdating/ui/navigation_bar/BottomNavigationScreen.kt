@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.trashdating.repo.PhotoRepository
+import com.example.trashdating.repository.PhotoRepository
 import com.example.trashdating.ui.navigation_bar.IconNavItem
 import com.example.trashdating.ui.navigation_bar.ImageNavItem
 import com.example.trashdating.ui.navigation_bar.NavigationConstants
@@ -35,7 +35,6 @@ fun BottomBar(
     NavigationBar(
         modifier = modifier.height(60.dp),
         containerColor = MaterialTheme.colorScheme.surface,
-//        tonalElevation = 1.dp
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -94,7 +93,7 @@ fun BottomBar(
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.surface,
                             unselectedIconColor = Color(0xFFFF9401),
-                            indicatorColor = Color(0xFFFF9401),
+                            indicatorColor = MaterialTheme.colorScheme.surface,
                         )
 
                     )

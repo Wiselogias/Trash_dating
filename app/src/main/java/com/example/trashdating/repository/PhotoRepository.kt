@@ -1,4 +1,4 @@
-package com.example.trashdating.repo
+package com.example.trashdating.repository
 
 import androidx.compose.runtime.Composable
 import coil.compose.AsyncImagePainter

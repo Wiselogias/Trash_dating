@@ -41,7 +41,31 @@ class UsersRepositoryMock : UsersRepository {
                 profileImage = "https://i.pinimg.com/236x/1a/af/61/1aaf61b74ccc30ea596abf7a1db81639.jpg",
                 100
             )
-        )
+        ),
+        Pair(
+            4,
+            Profile(
+                id = 4,
+                name = "Anna",
+                email = "anna@example.com",
+                avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlwGc-VfxV9QMIkmFwxw7dD0rW74M9W7hHBw&s",
+                hobby = Hobby.Travelling,
+                profileImage = "https://img2.akspic.ru/previews/0/5/8/4/7/174850/174850-zakat_oblaka_estetika-oblako-zakat-estetika-atmosfera-500x.jpg",
+                95
+            )
+        ),
+        Pair(
+            5,
+            Profile(
+                id = 4,
+                name = "Anna",
+                email = "anna@example.com",
+                avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlwGc-VfxV9QMIkmFwxw7dD0rW74M9W7hHBw&s",
+                hobby = Hobby.Travelling,
+                profileImage = "https://img2.akspic.ru/previews/0/5/8/4/7/174850/174850-zakat_oblaka_estetika-oblako-zakat-estetika-atmosfera-500x.jpg",
+                95
+            )
+        ),
     )
 
     override fun getAllUsers() : List<Profile> {
