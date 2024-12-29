@@ -80,7 +80,9 @@ private fun Header() {
             modifier = Modifier.size(38.dp),
             shape = CircleShape,
             border = BorderStroke(1.dp, Orange),
-            colors = CardDefaults.cardColors(containerColor = White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
+            )
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -100,7 +102,9 @@ private fun Header() {
             modifier = Modifier.size(38.dp),
             shape = CircleShape,
             border = BorderStroke(1.dp, Orange),
-            colors = CardDefaults.cardColors(containerColor = White)
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer
+            )
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.options),
@@ -136,7 +140,9 @@ fun LikesAndChats(
                 modifier = Modifier.size(56.dp),
                 shape = CircleShape,
                 border = BorderStroke(2.dp, Orange),
-                colors = CardDefaults.cardColors(containerColor = White)
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                )
             ) {
                 Icon(
                     imageVector = Icons.Default.Favorite,
@@ -170,7 +176,9 @@ fun LikesAndChats(
                 modifier = Modifier.size(56.dp),
                 shape = CircleShape,
                 border = BorderStroke(2.dp, Orange),
-                colors = CardDefaults.cardColors(containerColor = White)
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                )
             ) {
                 Icon(
                     painter = painterResource(R.drawable.messages),
@@ -205,7 +213,12 @@ fun MatchedProfilesList(onPersonProfileClick: () -> Unit, profiles: List<Profile
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(top = 16.dp)
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
             Text(
                 text = stringResource(R.string.matches_srceen_total_matches),
                 fontSize = 20.sp,
@@ -242,7 +255,7 @@ fun MatchedProfilesList(onPersonProfileClick: () -> Unit, profiles: List<Profile
                         Card (
                             modifier = Modifier
                                 .align(Alignment.TopCenter)
-                                .width(80.dp),
+                                .width(100.dp),
                             colors = CardDefaults.cardColors(containerColor = Orange),
                             shape = RoundedCornerShape(
                                 bottomEndPercent = 40,
@@ -257,7 +270,7 @@ fun MatchedProfilesList(onPersonProfileClick: () -> Unit, profiles: List<Profile
                                 textAlign = TextAlign.Right,
                                 color = White,
                                 fontWeight = FontWeight.SemiBold,
-                                fontSize = 10.sp,
+                                fontSize = 14.sp,
                                 modifier = Modifier.padding(horizontal = 5.dp)
                                     .align(Alignment.CenterHorizontally)
                             )

@@ -269,7 +269,8 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                     text = profile.hobby.name,
                     style = MaterialTheme.typography.labelLarge,
                     fontSize = 20.sp,
-                    fontStyle = FontStyle.Italic
+                    fontStyle = FontStyle.Italic,
+                    color = White
                 )
             }
 
@@ -287,7 +288,8 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     text = viewModel.getQuote(profile.id),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = White
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -295,7 +297,8 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                     text = profile.name,
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    color = White
                 )
             }
 
@@ -311,21 +314,24 @@ private fun ProfileListItem(profile: Profile, viewModel: ProfilesViewModel) {
                     modifier = Modifier
                         .padding(bottom = 8.dp)
                         .fillMaxWidth()
-                        .height(45.dp)
+                        .height(45.dp),
+                    tint = White
                 )
                Icon(
                     painter = painterResource(id = R.drawable.write),
                     contentDescription = "Message",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(45.dp)
-                )
+                        .height(45.dp),
+                    tint = White
+               )
                 Icon(
                     painter = painterResource(id = R.drawable.more),
                     contentDescription = "Options",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(45.dp)
+                        .height(45.dp),
+                    tint = White
                 )
             }
         }
