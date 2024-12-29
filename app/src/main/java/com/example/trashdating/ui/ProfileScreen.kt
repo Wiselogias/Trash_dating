@@ -36,18 +36,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import coil.compose.AsyncImage
 import com.example.trashdating.R
-
+import com.example.trashdating.model.ProfileCard
 
 
 @Composable
 fun ProfileScreen(
-    //imageUrl: String,
-    name: String,
-    city: String,
-    age: Int,
-    distance: Float,
-    matchprocent: Int,
-    //tags: List<String>
+    profile: ProfileCard
 ) {
     val tagsEats = remember { listOf("Пицца", "Суши", "Бургеры", "Кофе") }
     val tagSocials = remember { listOf("Кинотеатры", "Концерты и шоу", "Музеи и галлереи", "Театры", "Шоппинг") }
@@ -61,8 +55,8 @@ fun ProfileScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        ProfileBackgroundInformation(name, age, city, matchprocent)
-        Header(distance)
+        ProfileBackgroundInformation(profile.name, profile.age, profile.city, profile.matchprocent)
+        Header(profile.distance)
         DraggableSheet(
             tagsEats = tagsEats,
             tagsSocials = tagSocials,
